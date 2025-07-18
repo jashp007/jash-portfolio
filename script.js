@@ -1,55 +1,70 @@
-// Netflix Clone Portfolio JavaScript
+// Legacy Netflix Clone Portfolio JavaScript
+// This file maintains backward compatibility while the new component system loads
 
-// Profile Selection Logic
-document.addEventListener('DOMContentLoaded', function() {
-    const profileScreen = document.getElementById('profileScreen');
-    const mainContent = document.getElementById('mainContent');
-    const profileItems = document.querySelectorAll('.profile-item');
+// Check if component system is available
+const useComponentSystem = typeof window.PortfolioApp !== 'undefined';
+
+if (!useComponentSystem) {
+    console.log('Loading legacy script system...');
     
-    // Handle profile selection
-    profileItems.forEach(item => {
-        item.addEventListener('click', function() {
-            const profileType = this.getAttribute('data-profile');
+    // Original profile selection logic (fallback)
+    document.addEventListener('DOMContentLoaded', function() {
+        const profileScreen = document.getElementById('profileScreen');
+        const mainContent = document.getElementById('mainContent');
+        const profileItems = document.querySelectorAll('.profile-item');
+        
+        // Only initialize if components haven't already handled this
+        if (profileScreen && !profileScreen.classList.contains('component-handled')) {
+            // Handle profile selection
+            profileItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const profileType = this.getAttribute('data-profile');
+                    
+                    if (profileType === 'guest') {
+                        alert('Add Profile functionality would be implemented here');
+                        return;
+                    }
+                    
+                    // Animate profile selection
+                    this.style.transform = 'scale(1.1)';
+                    this.style.opacity = '0.8';
+                    
+                    setTimeout(() => {
+                        profileScreen.classList.add('hidden');
+                        mainContent.classList.remove('hidden');
+                        initializeLegacyFeatures();
+                    }, 500);
+                });
+            });
             
-            if (profileType === 'guest') {
-                // Handle add profile functionality
-                alert('Add Profile functionality would be implemented here');
-                return;
+            // Manage profiles button
+            const manageProfilesBtn = document.querySelector('.manage-profiles');
+            if (manageProfilesBtn) {
+                manageProfilesBtn.addEventListener('click', function() {
+                    alert('Manage Profiles functionality would be implemented here');
+                });
             }
-            
-            // Animate profile selection
-            this.style.transform = 'scale(1.1)';
-            this.style.opacity = '0.8';
-            
-            setTimeout(() => {
-                profileScreen.classList.add('hidden');
-                mainContent.classList.remove('hidden');
-                initializeNetflixFeatures();
-            }, 500);
-        });
+        }
     });
-    
-    // Manage profiles button
-    const manageProfilesBtn = document.querySelector('.manage-profiles');
-    if (manageProfilesBtn) {
-        manageProfilesBtn.addEventListener('click', function() {
-            alert('Manage Profiles functionality would be implemented here');
-        });
-    }
-});
-
-// Initialize Netflix-style features
-function initializeNetflixFeatures() {
-    initializeHeader();
-    initializeHeroButtons();
-    initializeMovieCards();
-    initializeSkillBadges();
-    initializeContactMethods();
-    initializeScrollEffects();
 }
 
-// Netflix Header Functionality
-function initializeHeader() {
+// Legacy feature initialization
+function initializeLegacyFeatures() {
+    if (useComponentSystem) {
+        console.log('Component system active, skipping legacy initialization');
+        return;
+    }
+    
+    initializeLegacyHeader();
+    initializeLegacyHeroButtons();
+    initializeLegacyMovieCards();
+    initializeLegacySkillBadges();
+    initializeLegacyContactMethods();
+    initializeLegacyScrollEffects();
+}
+
+// Legacy Netflix Header Functionality
+function initializeLegacyHeader() {
     const header = document.querySelector('.netflix-header');
     const navItems = document.querySelectorAll('.nav-item');
     
@@ -117,7 +132,7 @@ function initializeHeader() {
 }
 
 // Hero Section Buttons
-function initializeHeroButtons() {
+function initializeLegacyHeroButtons() {
     const playBtn = document.querySelector('.play-btn');
     const infoBtn = document.querySelector('.info-btn');
     const likeBtn = document.querySelector('.like-btn');
@@ -187,7 +202,7 @@ function initializeHeroButtons() {
 }
 
 // Movie Cards (Project Cards) Functionality
-function initializeMovieCards() {
+function initializeLegacyMovieCards() {
     const movieCards = document.querySelectorAll('.movie-card');
     
     movieCards.forEach(card => {
@@ -444,8 +459,20 @@ function showProjectModal(projectType) {
     document.head.insertAdjacentHTML('beforeend', fadeOutStyle);
 }
 
+// Global trailer function for both legacy and component systems
+window.openTrailer = function(projectKey) {
+    // Check if Projects component is available and use it
+    if (window.portfolioApp && window.portfolioApp.components.projects) {
+        window.portfolioApp.components.projects.playTrailer(projectKey);
+        return;
+    }
+    
+    // Fallback to legacy modal system
+    showProjectModal(projectKey);
+};
+
 // Skill Badges Interaction
-function initializeSkillBadges() {
+function initializeLegacySkillBadges() {
     const skillBadges = document.querySelectorAll('.skill-badge');
     
     skillBadges.forEach(badge => {
@@ -465,7 +492,7 @@ function initializeSkillBadges() {
 }
 
 // Contact Methods
-function initializeContactMethods() {
+function initializeLegacyContactMethods() {
     const contactMethods = document.querySelectorAll('.contact-method');
     
     contactMethods.forEach(method => {
@@ -480,7 +507,7 @@ function initializeContactMethods() {
 }
 
 // Scroll Effects
-function initializeScrollEffects() {
+function initializeLegacyScrollEffects() {
     // Intersection Observer for animations
     const observerOptions = {
         threshold: 0.1,

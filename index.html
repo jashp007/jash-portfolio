@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jash Patel - Developer Portfolio</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Netflix+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="components/components.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -42,70 +43,14 @@
 
     <!-- Main Netflix-Style Portfolio -->
     <div id="mainContent" class="main-content hidden">
-        <!-- Netflix Header -->
-        <header class="netflix-header">
-            <div class="header-left">
-                <div class="netflix-logo-main">JASHFLIX</div>
-                <nav class="main-nav">
-                    <a href="#hero" class="nav-item active">Home</a>
-                    <a href="#about" class="nav-item">About</a>
-                    <a href="#projects" class="nav-item">Projects</a>
-                    <a href="#skills" class="nav-item">Skills</a>
-                    <a href="#experience" class="nav-item">Experience</a>
-                    <a href="#contact" class="nav-item">Contact</a>
-                </nav>
-            </div>
-            <div class="header-right">
-                <div class="search-icon"><i class="fas fa-search"></i></div>
-                <div class="notifications"><i class="fas fa-bell"></i></div>
-                <div class="profile-dropdown">
-                    <img src="https://via.placeholder.com/32x32/e50914/ffffff?text=JP" alt="Profile" class="profile-pic">
-                    <i class="fas fa-caret-down"></i>
-                </div>
-            </div>
-        </header>
-
-        <!-- Hero Banner (Netflix Style) -->
-        <section id="hero" class="hero-banner">
-            <div class="hero-content">
-                <div class="hero-info">
-                    <h1 class="hero-title">Jash Patel</h1>
-                    <div class="hero-meta">
-                        <span class="match">98% Match</span>
-                        <span class="year">2024</span>
-                        <span class="rating">HD</span>
-                        <span class="duration">Full Stack Developer</span>
-                    </div>
-                    <p class="hero-description">
-                        A passionate Computer Science student specializing in data engineering and full-stack development. 
-                        Experience building scalable data pipelines, AI-powered applications, and modern web solutions 
-                        using cutting-edge technologies.
-                    </p>
-                    <div class="hero-buttons">
-                        <button class="play-btn">
-                            <i class="fas fa-play"></i>
-                            View Portfolio
-                        </button>
-                        <button class="info-btn">
-                            <i class="fas fa-info-circle"></i>
-                            More Info
-                        </button>
-                        <button class="like-btn">
-                            <i class="fas fa-thumbs-up"></i>
-                        </button>
-                        <button class="add-btn">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="hero-fade"></div>
-        </section>
+        <!-- Header will be injected by Header component -->
+        
+        <!-- Hero Banner will be injected by Hero component -->
 
         <!-- Netflix-Style Content Rows -->
         <main class="content-rows">
             <!-- About Me Row -->
-            <section class="content-row">
+            <section class="content-row" id="about" data-section="about">
                 <h2 class="row-title">About Jash Patel</h2>
                 <div class="about-netflix">
                     <div class="about-card">
@@ -131,12 +76,18 @@
             </section>
 
             <!-- Featured Projects Row -->
-            <section class="content-row">
+            <section class="content-row" id="projects" data-section="projects">
                 <h2 class="row-title">Featured Projects</h2>
                 <div class="netflix-slider">
                     <div class="slider-container">
                         <div class="movie-card" data-project="agrimitra">
                             <img src="https://via.placeholder.com/300x450/1db954/ffffff?text=AgriMitra" alt="AgriMitra">
+                            <div class="trailer-overlay">
+                                <button class="trailer-btn" onclick="openTrailer('agrimitra')">
+                                    <i class="fas fa-play"></i>
+                                    View Demo
+                                </button>
+                            </div>
                             <div class="card-info">
                                 <h4>AgriMitra</h4>
                                 <div class="card-meta">
@@ -155,6 +106,12 @@
 
                         <div class="movie-card" data-project="finance-guru">
                             <img src="https://via.placeholder.com/300x450/3498db/ffffff?text=Finance+Guru" alt="Finance Guru">
+                            <div class="trailer-overlay">
+                                <button class="trailer-btn" onclick="openTrailer('finance-guru')">
+                                    <i class="fas fa-play"></i>
+                                    View Demo
+                                </button>
+                            </div>
                             <div class="card-info">
                                 <h4>Finance Guru</h4>
                                 <div class="card-meta">
@@ -172,6 +129,12 @@
 
                         <div class="movie-card" data-project="campus-nav">
                             <img src="https://via.placeholder.com/300x450/9b59b6/ffffff?text=Campus+Nav" alt="Campus Navigation">
+                            <div class="trailer-overlay">
+                                <button class="trailer-btn" onclick="openTrailer('campus-nav')">
+                                    <i class="fas fa-play"></i>
+                                    View Demo
+                                </button>
+                            </div>
                             <div class="card-info">
                                 <h4>Campus Navigator</h4>
                                 <div class="card-meta">
@@ -189,6 +152,12 @@
 
                         <div class="movie-card" data-project="steam-analysis">
                             <img src="https://via.placeholder.com/300x450/e67e22/ffffff?text=Steam+Analytics" alt="Steam Analysis">
+                            <div class="trailer-overlay">
+                                <button class="trailer-btn" onclick="openTrailer('steam-analysis')">
+                                    <i class="fas fa-play"></i>
+                                    View Demo
+                                </button>
+                            </div>
                             <div class="card-info">
                                 <h4>Steam Gaming Analysis</h4>
                                 <div class="card-meta">
@@ -208,7 +177,7 @@
             </section>
 
             <!-- Technical Skills Row -->
-            <section class="content-row">
+            <section class="content-row" id="skills" data-section="skills">
                 <h2 class="row-title">Technical Skills</h2>
                 <div class="skills-netflix">
                     <div class="skill-category">
@@ -245,7 +214,7 @@
             </section>
 
             <!-- Experience Row -->
-            <section class="content-row">
+            <section class="content-row" id="experience" data-section="experience">
                 <h2 class="row-title">Professional Experience</h2>
                 <div class="experience-netflix">
                     <div class="experience-card">
@@ -282,7 +251,7 @@
             </section>
 
             <!-- Contact Row -->
-            <section class="content-row">
+            <section class="content-row" id="contact" data-section="contact">
                 <h2 class="row-title">Get In Touch</h2>
                 <div class="contact-netflix">
                     <div class="contact-card">
@@ -325,6 +294,14 @@
         </footer>
     </div>
 
+    <!-- Component Scripts -->
+    <script src="components/ProfileScreen.js"></script>
+    <script src="components/Header.js"></script>
+    <script src="components/Hero.js"></script>
+    <script src="components/Projects.js"></script>
+    <script src="components/App.js"></script>
+    
+    <!-- Legacy Script for backward compatibility -->
     <script src="script.js"></script>
 </body>
 </html>

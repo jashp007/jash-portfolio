@@ -23,7 +23,7 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     background: var(--netflix-black);
     color: var(--netflix-white);
     overflow-x: hidden;
@@ -629,6 +629,65 @@ body {
     position: relative;
     box-shadow: var(--shadow-medium);
     border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.movie-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: var(--transition);
+    z-index: 1;
+}
+
+.movie-card:hover::before {
+    opacity: 1;
+}
+
+.movie-card .trailer-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.movie-card:hover .trailer-overlay {
+    opacity: 1;
+}
+
+.trailer-btn {
+    background: var(--netflix-red);
+    color: var(--netflix-white);
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: var(--transition);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 20px rgba(229, 9, 20, 0.4);
+}
+
+.trailer-btn:hover {
+    background: #ff0000;
+    transform: scale(1.1);
+    box-shadow: 0 6px 30px rgba(229, 9, 20, 0.6);
+}
+
+.trailer-btn i {
+    font-size: 1.2rem;
 }
 
 .movie-card:hover {
