@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug - Netflix Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #000000;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        .debug-info {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 0, 0, 0.8);
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            z-index: 9999;
+        }
+
+        .profile-screen {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #000000 0%, #0a0a0a 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .netflix-logo {
+            position: absolute;
+            top: 3rem;
+            left: 3rem;
+        }
+
+        .netflix-logo h1 {
+            color: #e50914;
+            font-size: 2.8rem;
+            font-weight: 900;
+            letter-spacing: -0.05em;
+        }
+
+        .profile-title {
+            font-size: 4rem;
+            font-weight: 400;
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+
+        .profiles-grid {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .profile-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            padding: 1.5rem;
+        }
+
+        .profile-item:hover {
+            transform: scale(1.08);
+        }
+
+        .profile-avatar {
+            width: 180px;
+            height: 180px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            border: 4px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .profile-item:hover .profile-avatar {
+            border-color: #ffffff;
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-avatar.guest {
+            background: #2f2f2f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-avatar.guest i {
+            font-size: 4rem;
+            color: #b3b3b3;
+        }
+
+        .profile-name {
+            font-size: 1.5rem;
+            color: #b3b3b3;
+            transition: color 0.3s ease;
+        }
+
+        .profile-item:hover .profile-name {
+            color: #ffffff;
+        }
+
+        .manage-profiles {
+            background: transparent;
+            border: 2px solid #b3b3b3;
+            color: #b3b3b3;
+            padding: 1rem 3rem;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .manage-profiles:hover {
+            border-color: #ffffff;
+            color: #ffffff;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .main-content {
+            background: #000000;
+            min-height: 100vh;
+        }
+
+        .netflix-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 80px;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 4%;
+            z-index: 1000;
+        }
+
+        .netflix-logo-main {
+            color: #e50914;
+            font-size: 2.2rem;
+            font-weight: 900;
+        }
+
+        .hero-banner {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7)),
+                        url('https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=2069&q=80') center/cover;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-content {
+            padding: 0 4%;
+            max-width: 55%;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+        }
+
+        .hero-description {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            margin-bottom: 3rem;
+            max-width: 650px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .play-btn {
+            background: #ffffff;
+            color: #000000;
+            border: none;
+            padding: 1.2rem 3rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .play-btn:hover {
+            background: rgba(255, 255, 255, 0.85);
+            transform: translateY(-2px);
+        }
+
+        .content-rows {
+            background: #000000;
+            padding: 3rem 4%;
+        }
+
+        .row-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: #ffffff;
+        }
+
+        .test-section {
+            background: #141414;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+            border: 1px solid #333;
+        }
+
+        @media (max-width: 768px) {
+            .profile-title {
+                font-size: 3rem;
+            }
+            
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .hero-content {
+                max-width: 95%;
+            }
+            
+            .profile-avatar {
+                width: 140px;
+                height: 140px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="debug-info">
+        <div>Screen: <span id="screenSize"></span></div>
+        <div>CSS Loaded: <span id="cssStatus">✓</span></div>
+        <div>JS Loaded: <span id="jsStatus">✓</span></div>
+    </div>
+
+    <!-- Profile Selection Screen -->
+    <div id="profileScreen" class="profile-screen">
+        <div class="netflix-logo">
+            <h1>JASHFLIX</h1>
+        </div>
+        <div class="profile-container">
+            <h1 class="profile-title">Who's coding today?</h1>
+            <div class="profiles-grid">
+                <div class="profile-item" onclick="showMainContent()">
+                    <div class="profile-avatar">
+                        <img src="https://via.placeholder.com/180x180/e50914/ffffff?text=JP" alt="Jash Patel">
+                    </div>
+                    <span class="profile-name">Jash Patel</span>
+                </div>
+                <div class="profile-item" onclick="showMainContent()">
+                    <div class="profile-avatar">
+                        <img src="https://via.placeholder.com/180x180/333333/ffffff?text=HR" alt="Recruiter">
+                    </div>
+                    <span class="profile-name">Recruiter</span>
+                </div>
+                <div class="profile-item">
+                    <div class="profile-avatar guest">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <span class="profile-name">Add Profile</span>
+                </div>
+            </div>
+            <button class="manage-profiles">Manage Profiles</button>
+        </div>
+    </div>
+
+    <!-- Main Netflix-Style Portfolio -->
+    <div id="mainContent" class="main-content hidden">
+        <!-- Netflix Header -->
+        <header class="netflix-header">
+            <div class="netflix-logo-main">JASHFLIX</div>
+            <div onclick="showProfileScreen()" style="cursor: pointer; color: #ffffff;">
+                <i class="fas fa-user"></i> Switch Profile
+            </div>
+        </header>
+
+        <!-- Hero Banner -->
+        <section class="hero-banner">
+            <div class="hero-content">
+                <h1 class="hero-title">Jash Patel</h1>
+                <p class="hero-description">
+                    A passionate Computer Science student specializing in data engineering and full-stack development. 
+                    Experience building scalable data pipelines, AI-powered applications, and modern web solutions 
+                    using cutting-edge technologies.
+                </p>
+                <button class="play-btn">
+                    <i class="fas fa-play"></i>
+                    View Portfolio
+                </button>
+            </div>
+        </section>
+
+        <!-- Content -->
+        <div class="content-rows">
+            <h2 class="row-title">About Jash Patel</h2>
+            <div class="test-section">
+                <h3>Computer Science Student & Developer</h3>
+                <p style="color: #b3b3b3; margin-top: 1rem;">
+                    Dedicated Computer Science student at the University of Illinois at Chicago with hands-on experience 
+                    as a Project Data Engineer Intern and Computer Specialist. Expertise in building scalable data pipelines, 
+                    AI-powered applications, and providing technical support across enterprise environments.
+                </p>
+            </div>
+
+            <h2 class="row-title">Test Elements</h2>
+            <div class="test-section">
+                <p>If you can see this section with proper styling, the CSS is working correctly.</p>
+                <p>Font Awesome Icon Test: <i class="fas fa-check"></i></p>
+                <p>Background should be dark gray (#141414)</p>
+                <p>Text should be white</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Debug information
+        function updateDebugInfo() {
+            document.getElementById('screenSize').textContent = window.innerWidth + 'x' + window.innerHeight;
+        }
+
+        function showMainContent() {
+            console.log('Switching to main content');
+            document.getElementById('profileScreen').classList.add('hidden');
+            document.getElementById('mainContent').classList.remove('hidden');
+        }
+
+        function showProfileScreen() {
+            console.log('Switching to profile screen');
+            document.getElementById('mainContent').classList.add('hidden');
+            document.getElementById('profileScreen').classList.remove('hidden');
+        }
+
+        // Initialize
+        window.addEventListener('load', function() {
+            updateDebugInfo();
+            console.log('Page loaded successfully');
+        });
+
+        window.addEventListener('resize', updateDebugInfo);
+
+        // Test if everything is working
+        console.log('Debug script loaded');
+    </script>
+</body>
+</html>
